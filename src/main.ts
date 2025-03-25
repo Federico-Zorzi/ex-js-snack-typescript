@@ -54,3 +54,78 @@ function isPromise(value) {
 if (isPromise(valore)) {
   console.log(await valore);
 }
+
+/* SNACK 2 */
+type Linguaggi =
+  | "JavaScript"
+  | "TypeScript"
+  | "Python"
+  | "Java"
+  | "C#"
+  | "React"
+  | "Angular";
+
+type Dipendente = {
+  nome: string;
+  cognome: string;
+  annoNascita: number;
+  sesso: "m" | "f";
+  anniDiServizio: number[];
+  readonly emailAziendale: string;
+  contratto: "indeterminato" | "determinato" | "freelance";
+};
+
+type Developer = {
+  livelloEsperienza: "Junior" | "Mid" | "Senior";
+  linguaggi?: Linguaggi[];
+  certificazioni: string[];
+};
+
+type ProjectManager = {
+  teamSize: number | null;
+  budgetGestito?: number;
+  stakeholderPrincipali: string[];
+};
+
+type Team = {
+  nome: string;
+  progettoAttuale: string | null;
+  budget: number;
+  membri: [ProjectManager, ...Developer[]];
+};
+
+const nuovoDipendente: Dipendente & Developer = {
+  nome: "Federico",
+  cognome: "Zorzi",
+  annoNascita: 1999,
+  sesso: "m",
+  anniDiServizio: [2019, 2020, 2021, 2022],
+  emailAziendale: "federico@gmail.com",
+  contratto: "freelance",
+
+  livelloEsperienza: "Junior",
+  linguaggi: ["JavaScript", "React"],
+  certificazioni: ["certificazione web development"],
+};
+
+const nuovoTeam: Team = {
+  nome: "Nome nuovo team",
+  progettoAttuale: null,
+  budget: 1000,
+  membri: [
+    {
+      teamSize: 5,
+      budgetGestito: 1000,
+      stakeholderPrincipali: ["stakeholder1", "stakeholder2"],
+    },
+    {
+      livelloEsperienza: "Junior",
+      certificazioni: ["cert1"],
+    },
+    {
+      livelloEsperienza: "Mid",
+      linguaggi: ["Angular", "Java"],
+      certificazioni: ["cert1", "cert2"],
+    },
+  ],
+};
