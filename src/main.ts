@@ -7,7 +7,7 @@ let valore: unknown = "Stringa di prova";
 // let valore: unknown = true;
 // let valore: unknown = null;
 // let valore: unknown = ["test1", "test2", "test3"];
-/* let valore: unknown = new Promise((resolve, reject) => {
+/*let valore: unknown = new Promise((resolve, reject) => {
   setTimeout(() => {
     const randomNum = Math.random();
 
@@ -15,44 +15,22 @@ let valore: unknown = "Stringa di prova";
       resolve("Operazione riuscita");
     } else reject("Operazione fallita");
   }, 2000);
-}); */
+});*/
 
-switch (typeof valore) {
-  case "string":
-    console.log(valore.toUpperCase());
-    break;
-
-  case "number":
-    console.log(valore * 2);
-    break;
-
-  case "boolean":
-    console.log(valore ? "Sì" : "No");
-    break;
-
-  default:
-    console.log("Tipo non supportato");
-    break;
-}
-
-if (valore === null) {
+if (typeof valore === "string") {
+  console.log(valore.toUpperCase());
+} else if (typeof valore === "number") {
+  console.log(valore * 2);
+} else if (typeof valore === "boolean") {
+  console.log(valore ? "Sì" : "No");
+} else if (valore === null) {
   console.log("Il dato è vuoto");
-}
-
-if (Array.isArray(valore)) {
+} else if (Array.isArray(valore)) {
   console.log("lunghezza array", valore.length);
-}
-
-function isPromise(value) {
-  return (
-    Boolean(value) &&
-    typeof value.then === "function" &&
-    typeof value.catch === "function"
-  );
-}
-
-if (isPromise(valore)) {
-  console.log(await valore);
+} else if (valore instanceof Promise) {
+  valore.then((data) => console.log(data));
+} else {
+  console.log("Tipo non supportato");
 }
 
 /* SNACK 2 */
@@ -75,13 +53,13 @@ type Dipendente = {
   contratto: "indeterminato" | "determinato" | "freelance";
 };
 
-type Developer = {
+type Developer = Dipendente & {
   livelloEsperienza: "Junior" | "Mid" | "Senior";
   linguaggi?: Linguaggi[];
   certificazioni: string[];
 };
 
-type ProjectManager = {
+type ProjectManager = Dipendente & {
   teamSize: number | null;
   budgetGestito?: number;
   stakeholderPrincipali: string[];
@@ -94,7 +72,7 @@ type Team = {
   membri: [ProjectManager, Developer, ...Developer[]];
 };
 
-const nuovoDipendente: Dipendente & Developer = {
+const nuovoDev: Developer = {
   nome: "Federico",
   cognome: "Zorzi",
   annoNascita: 1999,
@@ -108,24 +86,37 @@ const nuovoDipendente: Dipendente & Developer = {
   certificazioni: ["certificazione web development"],
 };
 
+const nuovoDev2: Developer = {
+  nome: "Acaso",
+  cognome: "Tizio",
+  annoNascita: 1998,
+  sesso: "m",
+  anniDiServizio: [2019, 2020],
+  emailAziendale: "federico@gmail.com",
+  contratto: "indeterminato",
+
+  livelloEsperienza: "Senior",
+  linguaggi: ["JavaScript", "React", "Angular", "TypeScript"],
+  certificazioni: ["certificazione web development1"],
+};
+
+const nuovoPj: ProjectManager = {
+  nome: "Tizio",
+  cognome: "Acaso",
+  annoNascita: 1997,
+  sesso: "m",
+  anniDiServizio: [2019, 2022],
+  emailAziendale: "tizio@gmail.com",
+  contratto: "determinato",
+
+  teamSize: 5,
+  budgetGestito: 2000,
+  stakeholderPrincipali: ["stackholder1"],
+};
+
 const nuovoTeam: Team = {
   nome: "Nome nuovo team",
   progettoAttuale: null,
   budget: 1000,
-  membri: [
-    {
-      teamSize: 5,
-      budgetGestito: 1000,
-      stakeholderPrincipali: ["stakeholder1", "stakeholder2"],
-    },
-    {
-      livelloEsperienza: "Junior",
-      certificazioni: ["cert1"],
-    },
-    {
-      livelloEsperienza: "Mid",
-      linguaggi: ["Angular", "Java"],
-      certificazioni: ["cert1", "cert2"],
-    },
-  ],
+  membri: [nuovoPj, nuovoDev, nuovoDev2],
 };
